@@ -1,0 +1,6 @@
+/Users/danilkorotaev/Projects/IT/IT/bin/Debug/IT.exe
+/Users/danilkorotaev/Projects/IT/IT/bin/Debug/IT.pdb
+/Users/danilkorotaev/Projects/IT/IT/obj/x86/Debug/IT.csprojAssemblyReference.cache
+/Users/danilkorotaev/Projects/IT/IT/obj/x86/Debug/IT.csproj.CoreCompileInputs.cache
+/Users/danilkorotaev/Projects/IT/IT/obj/x86/Debug/IT.exe
+/Users/danilkorotaev/Projects/IT/IT/obj/x86/Debug/IT.pdb
