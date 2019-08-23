@@ -116,7 +116,7 @@ namespace IT
                 questions.ForEach(x => fullSolution += $"{x},");
                 fullSolution += "\b}" + Environment.NewLine;
 
-                for (int i = T0i.Count -1; i != 0; --i)
+                for (int i = T0i.Count -1; i >= 0; --i)
                 {
                     T0i[i] = new KeyValuePair<uint, List<uint>>(T0i[i].Key, new List<uint>(T0i[i].Value.Except(questions)));
                     if(T0i[i].Value.Count == 0)
