@@ -37,6 +37,7 @@
     <Compile Include="MinGroupXperts.cs" />
     <Compile Include="Xpert.cs" />
     <Compile Include="Question.cs" />
+    <Compile Include="DBHelper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

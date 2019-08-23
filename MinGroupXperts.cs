@@ -9,12 +9,11 @@ namespace IT
         private List<Xpert> I0;
         private List<uint> T0;
         private List<KeyValuePair<uint ,List<uint>>> T0i;
-        private string fullSolution = "";
         int paragraph = 1;
 
         private List<(Xpert xpert, float weight)> Weights()
         {
-            fullSolution += paragraph++ + " Определим веса экспертов:" + Environment.NewLine;
+            FullSolution += paragraph++ + " Определим веса экспертов:" + Environment.NewLine;
 
             List<(Xpert xpert, float weight)> pi = new List<(Xpert xpert, float weight)>();
 
@@ -27,22 +26,22 @@ namespace IT
             
             foreach(var x in I0)
             {
-                fullSolution += $"- определим вес эксперта {x.Id}" + Environment.NewLine;
+                FullSolution += $"- определим вес эксперта {x.Id}" + Environment.NewLine;
                 int countQuestion = T0i.Find(i => i.Key == x.Id).Value.Count;
                 float p = countQuestion / total;
-                fullSolution += $"p{x.Id} = {countQuestion} / {total} = {p}" + Environment.NewLine;
+                FullSolution += $"p{x.Id} = {countQuestion} / {total} = {p}" + Environment.NewLine;
                 pi.Add((x,  p));
             }
 
             pi.Sort((l, r) => l.weight.CompareTo(r.weight));
 
-            fullSolution += " Упорядочим веса" + Environment.NewLine;
+            FullSolution += " Упорядочим веса" + Environment.NewLine;
             
             foreach(var p in pi)
             {
-                fullSolution += $"p{p.xpert.Id} = {p.weight}; ";
+                FullSolution += $"p{p.xpert.Id} = {p.weight}; ";
             }
-            fullSolution += Environment.NewLine;
+            FullSolution += Environment.NewLine;
             return pi;
         }
 
@@ -53,7 +52,7 @@ namespace IT
             T0i = _T0i;
         }
 
-        public string FullSolution { get => fullSolution; }
+        public string FullSolution { get; private set; } = "";
 
         private string InfoState()
         {
@@ -78,11 +77,11 @@ namespace IT
         {
             bool end = false;       
 
-            fullSolution += "Задано" + Environment.NewLine;
+            FullSolution += "Задано" + Environment.NewLine;
 
-            fullSolution += InfoState();
+            FullSolution += InfoState();
 
-            fullSolution += "Определить минимально возможную группу экспертов методом случайного поиска" + Environment.NewLine;
+            FullSolution += "Определить минимально возможную группу экспертов методом случайного поиска" + Environment.NewLine;
 
             List<(Xpert xpert, float weight)> weights = null;
 
@@ -109,12 +108,12 @@ namespace IT
 
                 I0.Remove(xpert);
 
-                fullSolution += paragraph++ + $". Из множества экспертов исключаем эксперта {xpert.Id}." + Environment.NewLine;
-                fullSolution += "Из множества вопросов исключаются вопросы {";
+                FullSolution += paragraph++ + $". Из множества экспертов исключаем эксперта {xpert.Id}." + Environment.NewLine;
+                FullSolution += "Из множества вопросов исключаются вопросы {";
                 var questions = T0i.Find(x => x.Key == xpert.Id).Value;
 
-                questions.ForEach(x => fullSolution += $"{x},");
-                fullSolution += "\b}" + Environment.NewLine;
+                questions.ForEach(x => FullSolution += $"{x},");
+                FullSolution += "\b}" + Environment.NewLine;
 
                 for (int i = T0i.Count -1; i >= 0; --i)
                 {
@@ -126,16 +125,16 @@ namespace IT
                 }
 
                 T0 = new List<uint>(T0.Except(questions));
-                fullSolution += paragraph++ + " Тогда остается: " + Environment.NewLine;
-                fullSolution += InfoState();
+                FullSolution += paragraph++ + " Тогда остается: " + Environment.NewLine;
+                FullSolution += InfoState();
             }
 
-            fullSolution += paragraph++ + "Таким образом можно сделать вывод о том," +
-                " что для дачи заключения по указанным вопросам из всех экспертов достаточно всего " + weights.Count;
+            FullSolution += paragraph++ + "Таким образом можно сделать вывод о том," +
+                " что для дачи заключения по указанным вопросам из всех экспертов достаточно всего " + weights.Count +": ";
 
-            weights.ForEach(x => fullSolution += " " + x.xpert.Id + ",");
+            weights.ForEach(x => FullSolution += " " + x.xpert.Id + ",");
 
-            fullSolution += "\b.";
+            FullSolution += "\b.";
 
             return I0;
         }

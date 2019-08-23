@@ -26,8 +26,7 @@ namespace IT
                                               };
 
             List<uint> T0 = new List<uint>
-            { 1U, 2U, 3U, 4U, 5U, 6U, 7U, 8U, 9U, 10U };
-
+            { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 
             List<KeyValuePair<uint, List<uint>>> T0i = new List<KeyValuePair<uint, List<uint>>> 
             {
