@@ -8,44 +8,87 @@ namespace IT
     {
         private List<Xpert> I0;
         private List<uint> T0;
-        private List<(List<uint> questions,uint idX)> T0i;
+        private List<KeyValuePair<uint ,List<uint>>> T0i;
+        private string fullSolution = "";
+        int paragraph = 1;
 
         private List<(Xpert xpert, float weight)> Weights()
         {
+            fullSolution += paragraph++ + " Определим веса экспертов:" + Environment.NewLine;
+
             List<(Xpert xpert, float weight)> pi = new List<(Xpert xpert, float weight)>();
 
             float total = 0;
 
             foreach(var item in T0i)
             {
-                total += item.questions.Count;
+                total += item.Value.Count;
             }
-
+            
             foreach(var x in I0)
             {
-                pi.Add((x, (T0i.Find(i => i.idX == x.Id).questions.Count / total)));
+                fullSolution += $"- определим вес эксперта {x.Id}" + Environment.NewLine;
+                int countQuestion = T0i.Find(i => i.Key == x.Id).Value.Count;
+                float p = countQuestion / total;
+                fullSolution += $"p{x.Id} = {countQuestion} / {total} = {p}" + Environment.NewLine;
+                pi.Add((x,  p));
             }
+
             pi.Sort((l, r) => l.weight.CompareTo(r.weight));
+
+            fullSolution += " Упорядочим веса" + Environment.NewLine;
+            
+            foreach(var p in pi)
+            {
+                fullSolution += $"p{p.xpert.Id} = {p.weight}; ";
+            }
+            fullSolution += Environment.NewLine;
             return pi;
         }
-        private void EraseQuestion(int idXpert)
-        {
 
-        }
-        public MinGroupXperts(List<Xpert> _I0, List<uint> _T0, List<(List<uint> questions, uint idX)> _T0i)
+        public MinGroupXperts(List<Xpert> _I0, List<uint> _T0, List<KeyValuePair<uint, List<uint>>> _T0i)
         {
             I0 = _I0;
             T0 = _T0;
             T0i = _T0i;
         }
 
+        public string FullSolution { get => fullSolution; }
+
+        private string InfoState()
+        {
+            string result = "I0 = {";
+
+            I0.ForEach(x => result += x.Id + ",");
+
+            result += "\b} - множество всех экспертов" + Environment.NewLine;
+
+            result += "T0i - множество всех вопросов, на которые может ответить i-ый эксперт" + Environment.NewLine;
+
+            T0i.ForEach(x => {
+                result += $"T0{x.Key} = {{";
+                x.Value.ForEach(y => result += $"{y},");
+                result += "\b};" + Environment.NewLine;
+            });
+
+            return result;
+        }
+
         public List<Xpert> Evaluate()
         {
-            bool end = false;
+            bool end = false;       
 
-            while(!end)
-            {
-                var weights = Weights();
+            fullSolution += "Задано" + Environment.NewLine;
+
+            fullSolution += InfoState();
+
+            fullSolution += "Определить минимально возможную группу экспертов методом случайного поиска" + Environment.NewLine;
+
+            List<(Xpert xpert, float weight)> weights = null;
+
+            while (!end)
+            {       
+                weights = Weights();
 
                 if (weights.Count == 1)
                     break;
@@ -66,22 +109,34 @@ namespace IT
 
                 I0.Remove(xpert);
 
-                var questions = T0i.Find(x => x.idX == xpert.Id).questions;
+                fullSolution += paragraph++ + $". Из множества экспертов исключаем эксперта {xpert.Id}." + Environment.NewLine;
+                fullSolution += "Из множества вопросов исключаются вопросы {";
+                var questions = T0i.Find(x => x.Key == xpert.Id).Value;
 
-                //foreach (var item in T0i)
-                //{
-                //    item.questions.Except(questions);
-                //}
+                questions.ForEach(x => fullSolution += $"{x},");
+                fullSolution += "\b}" + Environment.NewLine;
 
-                for(int i = 0; i < T0i.Count; ++i)
+                for (int i = T0i.Count -1; i != 0; --i)
                 {
-                    T0i[i].questions = T0i[i].questions.Except(questions);
+                    T0i[i] = new KeyValuePair<uint, List<uint>>(T0i[i].Key, new List<uint>(T0i[i].Value.Except(questions)));
+                    if(T0i[i].Value.Count == 0)
+                    {
+                        T0i.RemoveAt(i);
+                    }
                 }
 
-                T0.Except(questions);
-                
+                T0 = new List<uint>(T0.Except(questions));
+                fullSolution += paragraph++ + " Тогда остается: " + Environment.NewLine;
+                fullSolution += InfoState();
             }
-            
+
+            fullSolution += paragraph++ + "Таким образом можно сделать вывод о том," +
+                " что для дачи заключения по указанным вопросам из всех экспертов достаточно всего " + weights.Count;
+
+            weights.ForEach(x => fullSolution += " " + x.xpert.Id + ",");
+
+            fullSolution += "\b.";
+
             return I0;
         }
     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace IT
 {
@@ -8,6 +9,8 @@ namespace IT
     {
         public static void Main(string[] args)
         {
+            Console.OutputEncoding = Encoding.UTF8;
+
             List<int> listint1 = new List<int>{ 1, 2, 3, 4, 5 };
 
             List<int> listint2 = new List<int> { 4, 5 };
@@ -26,13 +29,13 @@ namespace IT
             { 1U, 2U, 3U, 4U, 5U, 6U, 7U, 8U, 9U, 10U };
 
 
-            List<(List<uint> questions, uint idX)> T0i = new List<(List<uint> questions, uint idX)>
+            List<KeyValuePair<uint, List<uint>>> T0i = new List<KeyValuePair<uint, List<uint>>> 
             {
-                 (new List<uint> { 1, 2, 3, 4, 5 }, 1),
-                 (new List<uint> { 2, 3, 4, 5, 6, 7 }, 2),
-                 (new List<uint> { 5, 6, 7, 8 }, 3),
-                 (new List<uint> { 4, 5, 6, 7, 8, 9, 10 }, 4),
-                 (new List<uint> { 1, 2, 3, 4, 5, 7, 9, 10 }, 5)
+                 new KeyValuePair<uint, List<uint>>( 1, new List<uint> { 1, 2, 3, 4, 5 }),
+                 new KeyValuePair<uint, List<uint>>( 2, new List<uint> { 2, 3, 4, 5, 6, 7 }),
+                 new KeyValuePair<uint, List<uint>>( 3, new List<uint> { 5, 6, 7, 8 }),
+                 new KeyValuePair<uint, List<uint>>( 4,new List<uint> { 4, 5, 6, 7, 8, 9, 10 }),
+                 new KeyValuePair<uint, List<uint>>( 5,new List<uint> { 1, 2, 3, 4, 5, 7, 9, 10 })
             };
 
             MinGroupXperts keklol = new MinGroupXperts(I0,T0,T0i);
@@ -42,7 +45,8 @@ namespace IT
             {
                 Console.WriteLine(item.Id);
             }
-        //Console.WriteLine("Hello World!");
+
+            Console.WriteLine(keklol.FullSolution);
         }
     }
 }
