@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Xceed.Words.NET;
 
 namespace IT
 {
@@ -73,6 +74,39 @@ namespace IT
             return result;
         }
 
+        public void ToDocFile(string fileName)
+        {
+            var doc = DocX.Create(fileName);
+
+            string title = "Выбор минимальной группы экспертов";
+            var paraFormat = new Formatting
+            {
+                FontFamily = new Font("Times New Roman"),
+                Size = 14D,
+                Language = new System.Globalization.CultureInfo("ru-RU")
+            };
+
+            var TitleFormat = new Formatting
+            {
+                FontFamily = new Font("Times New Roman"),
+                Bold = true,
+                Size = 16D,
+                Language = new System.Globalization.CultureInfo("ru-RU")
+            };
+
+            doc.InsertParagraph(title, false, TitleFormat).Alignment = Alignment.center;
+            doc.InsertParagraph(FullSolution, false, paraFormat).SetLineSpacing(LineSpacingType.Line, 1.5f);
+            doc.Save();
+            doc.Dispose();
+
+        }
+
+        public string Сonclusion
+        {
+            get;
+            private set;
+        }
+
         public List<Xpert> Evaluate()
         {
             bool end = false;       
@@ -128,6 +162,11 @@ namespace IT
                 FullSolution += paragraph++ + " Тогда остается: " + Environment.NewLine;
                 FullSolution += InfoState();
             }
+
+            Сonclusion = "Для дачи заключения по указанным вопросам из всех экспертов достаточно всего " + weights.Count + ": ";
+            weights.ForEach(x => Сonclusion += " " + x.xpert.Id + ",");
+            Сonclusion += "\b.";
+
 
             FullSolution += paragraph++ + "Таким образом можно сделать вывод о том," +
                 " что для дачи заключения по указанным вопросам из всех экспертов достаточно всего " + weights.Count +": ";

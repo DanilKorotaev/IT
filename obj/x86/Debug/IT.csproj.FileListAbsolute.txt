@@ -4,3 +4,15 @@
 /Users/danilkorotaev/Projects/IT/IT/obj/x86/Debug/IT.csproj.CoreCompileInputs.cache
 /Users/danilkorotaev/Projects/IT/IT/obj/x86/Debug/IT.exe
 /Users/danilkorotaev/Projects/IT/IT/obj/x86/Debug/IT.pdb
+/Users/danilkorotaev/Projects/IT/IT/bin/Debug/IT.exe.config
+/Users/danilkorotaev/Projects/IT/IT/bin/Debug/EntityFramework.dll
+/Users/danilkorotaev/Projects/IT/IT/bin/Debug/EntityFramework.SqlServer.dll
+/Users/danilkorotaev/Projects/IT/IT/bin/Debug/System.Data.SQLite.dll
+/Users/danilkorotaev/Projects/IT/IT/bin/Debug/System.Data.SQLite.EF6.dll
+/Users/danilkorotaev/Projects/IT/IT/bin/Debug/System.Data.SQLite.Linq.dll
+/Users/danilkorotaev/Projects/IT/IT/bin/Debug/Xceed.Words.NET.dll
+/Users/danilkorotaev/Projects/IT/IT/bin/Debug/EntityFramework.xml
+/Users/danilkorotaev/Projects/IT/IT/bin/Debug/EntityFramework.SqlServer.xml
+/Users/danilkorotaev/Projects/IT/IT/bin/Debug/System.Data.SQLite.xml
+/Users/danilkorotaev/Projects/IT/IT/bin/Debug/System.Data.SQLite.dll.config
+/Users/danilkorotaev/Projects/IT/IT/obj/x86/Debug/IT.csproj.CopyComplete

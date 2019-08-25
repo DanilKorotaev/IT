@@ -40,10 +40,14 @@ namespace IT
             MinGroupXperts keklol = new MinGroupXperts(I0,T0,T0i);
             var items = keklol.Evaluate();
 
+            Console.WriteLine(keklol.Сonclusion);
+
             foreach(var item in items)
             {
                 Console.WriteLine(item.Id);
             }
+
+            keklol.ToDocFile("test.docx");
 
             Console.WriteLine(keklol.FullSolution);
         }
