@@ -4,7 +4,6 @@
     {
         public uint Id { get; set; }
         public string Discription { get; set; }
-        // public
         public Question(uint _id)
         {
             Id = _id;

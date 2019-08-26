@@ -12,5 +12,10 @@
         {
             Id = _id;
         }
+
+        public Xpert()
+        {
+
+        }
     }
 }

@@ -6,11 +6,7 @@ namespace IT
 {
     public class DBHelper
     {
-        static public string user = "root";
-        static public string password = "toor";
-        static public string server = "localhost";
-        static public string db = "it";
-        public static string DBFileName = "bd.db";
+        public static string DBFileName = "IT.db";
         static public string connStr = "datasource=" + DBFileName + ";Pooling=true;FailIfMissing=false;Version = 3";
         public SQLiteConnection conn;
         public string sql;
@@ -23,6 +19,33 @@ namespace IT
             conn.Open();
         }
 
+        public List<KeyValuePair<uint, List<uint>>> GetCompetence()
+        {
+            List<KeyValuePair<uint, List<uint>>> result = new List<KeyValuePair<uint, List<uint>>>();
+            sql = "";
+            command = new SQLiteCommand(sql, conn);
+            SQLiteDataReader rd = command.ExecuteReader();
+            if (rd.HasRows)
+            {
+                while (rd.Read())
+                {
+                    var id = result.FindIndex(x => x.Key.ToString() == rd["id_xpert"].ToString());
+                    if (id == -1)
+                    {
+                        result.Add(new KeyValuePair<uint, List<uint>>((uint)rd["id_xpert"], new List<uint> { (uint)rd["id_question"] }));
+                    }
+                    else
+                    {
+                        result[id].Value.Add((uint)rd["id_question"]);
+                    }
+                }
+            }
+            rd.Close();
+
+            return result;
+
+        }
+ 
         public List<Xpert> GetXperts()
         {
             sql = "";
@@ -41,9 +64,10 @@ namespace IT
                     NumPhone = rd["NumPhone"].ToString(),
                 });
             }
+            rd.Close();
+
             return xperts;
         }
-
 
         public List<Question> GetQuestion()
         {
@@ -60,6 +84,7 @@ namespace IT
                         Discription = rd["Discription"].ToString()
                     });
             }
+            rd.Close();
             return questions;
         }
     }
