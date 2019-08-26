@@ -10,6 +10,11 @@
             Id = _id;
         }
 
+        public Question()
+        {
+
+        }
+
         public Question(uint _id,string _discription)
         {
             Id = _id;
