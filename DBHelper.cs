@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
+using System.Linq;
 
 namespace IT
 {
@@ -19,10 +20,28 @@ namespace IT
             conn.Open();
         }
 
+        public bool AddXpert(Xpert xpert)
+        {
+            sql = $"SELECT * FROM Xpert WHERE (Id = {xpert.Id}";
+            command = new SQLiteCommand(sql, conn);
+            var rd = command.ExecuteReader();
+            if (rd.HasRows)
+            {
+                rd.Close();
+                sql = $"INSERT INTO xpert (`Name`, `Surname`, `Email`, `NumPhone`) " +
+                    $" VALUES('{xpert.Name}', '{xpert.Surname}', '{xpert.Email}', '{xpert.NumPhone}');";
+                command = new SQLiteCommand(sql, conn);
+                command.ExecuteNonQuery();
+                return true;
+            }
+            rd.Close();
+            return false;
+        }
+
         public List<KeyValuePair<uint, List<uint>>> GetCompetence()
         {
             List<KeyValuePair<uint, List<uint>>> result = new List<KeyValuePair<uint, List<uint>>>();
-            sql = "";
+            sql = "SELECT * FROM Competence";
             command = new SQLiteCommand(sql, conn);
             SQLiteDataReader rd = command.ExecuteReader();
             if (rd.HasRows)
@@ -48,7 +67,7 @@ namespace IT
  
         public List<Xpert> GetXperts()
         {
-            sql = "";
+            sql = "SELECT * FROM Xpert";
             command = new SQLiteCommand(sql, conn);
             SQLiteDataReader rd = command.ExecuteReader();
             List<Xpert> xperts = new List<Xpert>(); 
@@ -71,7 +90,7 @@ namespace IT
 
         public List<Question> GetQuestion()
         {
-            sql = "";
+            sql = "SELECT * FROM Question";
             command = new SQLiteCommand(sql, conn);
             SQLiteDataReader rd = command.ExecuteReader();
             List<Question> questions = new List<Question>();
